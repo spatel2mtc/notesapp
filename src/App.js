@@ -9,6 +9,7 @@ import {  createNote as CreateNote,
 import { onCreateNote } from './graphql/subscriptions'          
 import { List, Input, Button } from 'antd'
 import { v4 as uuid } from 'uuid'
+import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 
 const CLIENT_ID = uuid()
 const initialState = {
@@ -17,7 +18,8 @@ const initialState = {
   error: false,
   form: {
     name: '',
-    description: ''
+    description: '',
+    createdAt: ''
   }
 }
 
@@ -29,15 +31,15 @@ case 'RESET_FORM':
   return { ...state, form: initialState.form }
 case 'SET_INPUT':
   return { ...state, form: { ...state.form, [action.name]: action.value } }
-    case 'SET_NOTES':
+case 'SET_NOTES':
       return {
         ...state, notes: action.notes, loading: false
       }
-      case 'ERROR':
+case 'ERROR':
         return {
           ...state, loading: false, error: true
         }
-        default:
+  default:
           return {
             ...state
           };
@@ -92,6 +94,7 @@ const App = () => {
     return (
       <List.Item style={styles.item}
       actions={[
+        <p>{format(new Date(item.createdAt),"dd/MM/yyyy")}</p>,
         <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
         <p style={styles.p} onClick={() => updateNote(item)}>
       {item.completed ? 'completed' : 'mark completed'}
@@ -101,6 +104,7 @@ const App = () => {
         <List.Item.Meta
           title={item.name}
           description={item.description}
+
         />
       </List.Item>
     )
