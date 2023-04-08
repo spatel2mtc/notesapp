@@ -8,5 +8,6 @@ type Note @model {
   name: String!
   description: String
   completed: Boolean
-  due: String!
+  due: String
+  priority: String
 }

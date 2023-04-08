@@ -19,7 +19,8 @@ const initialState = {
   form: {
     name: '',
     description: '',
-    createdAt: ''
+    createdAt: '',
+    due: ''
   }
 }
 
@@ -94,7 +95,7 @@ const App = () => {
     return (
       <List.Item style={styles.item}
       actions={[
-        <p>{format(new Date(item.createdAt),"dd/MM/yyyy")}</p>,
+        <p>Created on {format(new Date(item.createdAt),"dd/MM/yyyy")}</p>,
         <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
         <p style={styles.p} onClick={() => updateNote(item)}>
       {item.completed ? 'completed' : 'mark completed'}
@@ -174,7 +175,7 @@ const App = () => {
   return ( 
   
   <div style={styles.container}>
-        <Input
+      <Input
       onChange={onChange}
       value={state.form.name}
       placeholder="Note Name"
@@ -188,6 +189,9 @@ const App = () => {
       name='description'
       style={styles.input}
     />
+
+
+
     <Button
       onClick={createNote}
       type="primary"
