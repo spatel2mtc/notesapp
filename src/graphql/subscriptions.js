@@ -10,6 +10,7 @@ export const onCreateNote = /* GraphQL */ `
       description
       completed
       due
+      priority
       createdAt
       updatedAt
     }
@@ -24,6 +25,7 @@ export const onUpdateNote = /* GraphQL */ `
       description
       completed
       due
+      priority
       createdAt
       updatedAt
     }
@@ -38,6 +40,7 @@ export const onDeleteNote = /* GraphQL */ `
       description
       completed
       due
+      priority
       createdAt
       updatedAt
     }

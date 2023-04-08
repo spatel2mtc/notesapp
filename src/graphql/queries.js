@@ -10,6 +10,7 @@ export const getNote = /* GraphQL */ `
       description
       completed
       due
+      priority
       createdAt
       updatedAt
     }
@@ -29,6 +30,7 @@ export const listNotes = /* GraphQL */ `
         description
         completed
         due
+        priority
         createdAt
         updatedAt
       }

@@ -99,7 +99,10 @@ const App = () => {
         <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
         <p style={styles.p} onClick={() => updateNote(item)}>
       {item.completed ? 'completed' : 'mark completed'}
-    </p>
+    </p>,
+      <p>
+{item.priority}
+      </p>
       ]}
       >
         <List.Item.Meta

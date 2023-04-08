@@ -13,6 +13,7 @@ export const createNote = /* GraphQL */ `
       description
       completed
       due
+      priority
       createdAt
       updatedAt
     }
@@ -30,6 +31,7 @@ export const updateNote = /* GraphQL */ `
       description
       completed
       due
+      priority
       createdAt
       updatedAt
     }
@@ -47,6 +49,7 @@ export const deleteNote = /* GraphQL */ `
       description
       completed
       due
+      priority
       createdAt
       updatedAt
     }
