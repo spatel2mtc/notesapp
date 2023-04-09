@@ -125,7 +125,7 @@ const App = () => {
     if (!form.name || !form.description) {
        return alert('please enter a name and description')
     }
-    const note = { ...form, clientId: CLIENT_ID, completed: false, id: uuid(),priority: Low }
+    const note = { ...form, clientId: CLIENT_ID, completed: false, id: uuid(),priority: "Low" }
     dispatch({ type: 'ADD_NOTE', note })
     dispatch({ type: 'RESET_FORM' })
     try {
