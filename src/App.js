@@ -84,7 +84,8 @@ const App = () => {
     container: {padding: 20},
     input: {marginBottom: 10},
     item: { textAlign: 'left' },
-    p: { color: '#1890ff' }
+    p: { color: '#1890ff' },
+
   }
 
 
@@ -93,13 +94,23 @@ const App = () => {
     return (
       <List.Item style={styles.item}
       actions={[
-        <p style={{color: "#00FF00"}}>{item.priority}</p>,
+        <p style={{color: item.priority === "High" ? "#FF0000" :"#00FF00" }}
+        >{item.priority}</p>,
         <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
         <p style={styles.p} onClick={() => updateNote(item)}>
       {item.completed ? 'completed' : 'mark completed'}
-    </p>
+    </p>,
+    <button 
+    id="highPriority"
+    onClick={() => setToHigh(item)}
+    >!</button>,
+    <button 
+    id="lowPriority"
+    onClick={() => setToLow(item)}
+    >-</button>
       ]}
       >
+        
         <List.Item.Meta
           title={item.name}
           description={item.description}
@@ -165,11 +176,46 @@ const App = () => {
     }
   }
 
+  const setToHigh = async(note) => {
+    const index = state.notes.findIndex(n => n.id === note.id)
+    const notes = [...state.notes]
+    notes[index].priority = "High"
+    dispatch({ type: 'SET_NOTES', notes})
+    try {
+      await API.graphql({
+        query: UpdateNote,
+        variables: { input: { id: note.id, priority: notes[index].priority } }
+      })
+      console.log('note successfully updated!')
+    } catch (err) {
+      console.log('error: ', err)
+    }
+  }
+
+  const setToLow = async(note) => {
+    const index = state.notes.findIndex(n => n.id === note.id)
+    const notes = [...state.notes]
+    notes[index].priority = "Low"
+    dispatch({ type: 'SET_NOTES', notes})
+    try {
+      await API.graphql({
+        query: UpdateNote,
+        variables: { input: { id: note.id, priority: notes[index].priority } }
+      })
+      console.log('note successfully updated!')
+    } catch (err) {
+      console.log('error: ', err)
+    }
+  }
+
+
   var total = state.notes.length;
   console.log(total);
   console.log(state.notes);
   var completed = state.notes.filter(finished => finished.completed).length;
   console.log(completed);
+  var high = state.notes.filter(notes => notes.priority == "High");
+  var low = state.notes.filter(notes => notes.priority == "Low");
   
   
 
@@ -183,6 +229,7 @@ const App = () => {
     <h2>Current List</h2>
     <h3>Total Items:{total}</h3>
     <h4>Unfinished Items: {total - completed}</h4>
+    <h4># of High Priority Items: {high.length}</h4>
         <List
           loading={state.loading}
           dataSource={state.notes}
