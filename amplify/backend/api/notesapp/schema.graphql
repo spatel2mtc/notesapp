@@ -9,5 +9,5 @@ type Note @model {
   description: String
   completed: Boolean
   due: String
-  priority: String
+  priority: String @default(value: "Low")
 }

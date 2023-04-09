@@ -18,9 +18,7 @@ const initialState = {
   error: false,
   form: {
     name: '',
-    description: '',
-    createdAt: '',
-    due: ''
+    description: ''
   }
 }
 
@@ -95,14 +93,11 @@ const App = () => {
     return (
       <List.Item style={styles.item}
       actions={[
-        <p>Created on {format(new Date(item.createdAt),"dd/MM/yyyy")}</p>,
+        <p style={{color: "#00FF00"}}>{item.priority}</p>,
         <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
         <p style={styles.p} onClick={() => updateNote(item)}>
       {item.completed ? 'completed' : 'mark completed'}
-    </p>,
-      <p>
-{item.priority}
-      </p>
+    </p>
       ]}
       >
         <List.Item.Meta
@@ -111,7 +106,7 @@ const App = () => {
 
         />
       </List.Item>
-    )
+        )
   }
 
   const createNote= async() => {
@@ -170,14 +165,31 @@ const App = () => {
     }
   }
 
-
-
+  var total = state.notes.length;
+  console.log(total);
+  console.log(state.notes);
+  var completed = state.notes.filter(finished => finished.completed).length;
+  console.log(completed);
+  
+  
 
 
 
   return ( 
+
+
   
   <div style={styles.container}>
+    <h2>Current List</h2>
+    <h3>Total Items:{total}</h3>
+    <h4>Unfinished Items: {total - completed}</h4>
+        <List
+          loading={state.loading}
+          dataSource={state.notes}
+          renderItem={renderItem}
+        />
+        <hr></hr>
+        <h3>Create New Item</h3>
       <Input
       onChange={onChange}
       value={state.form.name}
@@ -192,18 +204,14 @@ const App = () => {
       name='description'
       style={styles.input}
     />
-
-
-
     <Button
       onClick={createNote}
       type="primary"
     >Create Note</Button>
-        <List
-          loading={state.loading}
-          dataSource={state.notes}
-          renderItem={renderItem}
-        />
+    
+
+        <hr></hr>
+
   </div>
 
   );
